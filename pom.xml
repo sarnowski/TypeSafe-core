@@ -11,6 +11,8 @@
     <artifactId>TypeSafe</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <name>TypeSafe</name>
+
     <packaging>php</packaging>
 
     <developers>
@@ -23,7 +25,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/sarnowski/TypeSafe.git</connection>
-        <developerConnection>scm:git:git@github.com:sarnowski/TypeSafe.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/sarnowski/TypeSafe.git</developerConnection>
     </scm>
 
     <dependencies>
@@ -33,4 +35,26 @@
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <site>
+            <id>github</id>
+            <name>github.com webspace</name>
+            <url>file://${user.home}/github/TypeSafe/</url>
+        </site>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>sarnowski-github</id>
+            <name>sarnowski.github.com</name>
+            <url>http://sarnowski.github.com/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
