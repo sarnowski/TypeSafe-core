@@ -14,24 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 require_once('pinjector/Module.php');
-require_once('DefaultFramework.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class BootLoader {
+abstract class ServletModule implements Module {
+
+    private $matcher = array();
 
     /**
-     * Creates a new framework instance.
+     * Registers a matching regex to dispatch a request
+     * to the given binding.
      *
-     * @static
-     * @param Module $module
-     * @return Framework
+     * @param  string $requestMatching
+     * @param  string $className
+     * @param  string $annotation
+     * @return void
      */
-    public static function boot(Module $module) {
-        return new DefaultFramework($module);
+    public function handle($requestMatching, $className, $annotation = null) {
+        $this->matcher[] = array(
+            'requestMatching' => $requestMatching,
+            'className' => $className,
+            'annotation' => $annotation
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getMatcher() {
+        return $this->matcher;
     }
 
 }

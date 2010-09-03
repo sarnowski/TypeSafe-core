@@ -14,24 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('pinjector/Module.php');
-require_once('DefaultFramework.php');
+
+require_once('typesafe/ServletModule.php');
+require_once('TestServlet.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class BootLoader {
+class TestModule extends ServletModule {
 
-    /**
-     * Creates a new framework instance.
-     *
-     * @static
-     * @param Module $module
-     * @return Framework
-     */
-    public static function boot(Module $module) {
-        return new DefaultFramework($module);
+    public function configure(Binder $binder) {
+
+        $binder->bind('TestServlet')->inRequestScope();
+
+        // matches:  /test/<1>/<2>.html
+        $this->handle('#^/test/(.+)/(.+)\.html$#', 'TestServlet');
+
     }
 
 }

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 require_once('PHPUnit/Framework.php');
+require_once('typesafe/BootLoader.php');
+require_once('TestModule.php');
 
 /**
  *
@@ -24,7 +25,8 @@ require_once('PHPUnit/Framework.php');
 class ApplicationTest extends PHPUnit_Framework_TestCase {
 
     public function testDummy() {
-
+        $framework = BootLoader::boot(new TestModule());
+        $framework->handleRequest('/test/1234/9.html');
     }
 
 }

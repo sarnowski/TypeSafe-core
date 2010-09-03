@@ -14,24 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('pinjector/Module.php');
-require_once('DefaultFramework.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class BootLoader {
+interface Servlet {
 
     /**
-     * Creates a new framework instance.
+     * Handles a request.
      *
-     * @static
-     * @param Module $module
-     * @return Framework
+     * @abstract
+     * @param  array $matches
+     * @return void
      */
-    public static function boot(Module $module) {
-        return new DefaultFramework($module);
-    }
+    public function handleRequest($matches);
 
 }
