@@ -24,6 +24,6 @@ require_once('typesafe/Servlet.php');
 class TestServlet implements Servlet {
 
     public function handleRequest($matches) {
-        throw new Exception("matches: ".print_r($matches, true));
+        // can handle a request
     }
 }
