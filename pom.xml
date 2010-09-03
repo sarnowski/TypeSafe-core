@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.onsteroids.php</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.onsteroids.php</groupId>
+    <artifactId>TypeSafe</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <packaging>php</packaging>
+
+    <developers>
+        <developer>
+            <id>sarnowski</id>
+            <name>Tobias Sarnowski</name>
+            <email>sarnowski@new-thoughts.org</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/sarnowski/TypeSafe.git</connection>
+        <developerConnection>scm:git:git@github.com:sarnowski/TypeSafe.git</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.onsteroids.php</groupId>
+            <artifactId>pinjector</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>
