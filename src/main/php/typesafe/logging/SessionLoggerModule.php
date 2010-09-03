@@ -16,15 +16,15 @@
  */
 
 require_once('pinjector/Module.php');
-require_once('DefaultLogger.php');
+require_once('SessionLogger.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class DefaultLoggerModule implements Module {
+class SessionLoggerModule implements Module {
 
     public function configure(Binder $binder) {
-        $binder->bind('Logger')->to('DefaultLogger')->inSessionScope();
+        $binder->bind('Logger')->to('SessionLogger')->inSessionScope();
     }
 }
