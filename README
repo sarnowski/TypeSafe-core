@@ -1,42 +1,19 @@
-pinjector
+TypeSafe
 ================================================================================
 
-pinjector is a php IoC and AOP library.
+Just another PHP framwork. This is based on pinjector and uses it's IoC (DI)
+and AOP capabilities to provide a solid, typesafe and testable framework.
+
+For reference: http://github.com/sarnowski/pinjector
 
 
 
-Usage
+Bootstrapping
 ================================================================================
 
-require_once('pinjector/DefaultKernel.php');
+require_once('typesafe/BootLoader.php');
 
-$mod = new YourModuleImplementsModule();
-$kernel = DefaultKernel::boot($mod);
+// Look at the pinjector documentation to discover what a module is.
+$framework = BootLoader::boot(new ApplicationModule());
+$framework->handleRequest($_SERVER['REQUEST_URI']);
 
-$obj = $kernel->getInstance('YourBoundInterface');
-
-
-Binding
-================================================================================
-
-require_once('pinjector/Module.php');
-require_once('pinjector/Binder.php');
-
-class MyModule implements Module {
-
-    public function configure(Binder $binder) {
-
-        // normal bindings
-        $binder->bind('MyInterface')->to('MyImplementation')->inRequestScope();
-        $binder->bind('MyThirdInterface')
-                ->annotatedWith('alternative')
-                ->to('MyThirdImplementation')
-                ->inSessionScope();
-
-        // register interceptor for aop
-        $binder->bind('MySecondImplementation')->inRequestScope();
-        $binder->interceptWith('MySecondImplementation');
-
-    }
-
-}
