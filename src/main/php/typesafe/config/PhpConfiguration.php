@@ -18,20 +18,34 @@
 require_once('Configuration.php');
 
 /**
+ * Reads a PHP file and uses the resulting $config array
+ * as the configuration.
  * 
  * @author Tobias Sarnowski
  */
-class PropertyConfiguration implements Configuration {
+class PhpConfiguration implements Configuration {
 
+    /**
+     * @var array
+     */
     private $config;
 
+    /**
+     * @param  string $file a php file where the $config[] is stored
+     * @return void
+     */
     public function __construct($file) {
-        // TODO parse the configuration
-        $this->config = array();
-    }
+        if (!file_exists($file)) {
+            throw new ConfigurationException("Configuration file $file not found.");
+        }
 
-    public function addFile($file) {
-        // TODO add config of the file to the existing config
+        require($file);
+        if (isset($config)) {
+            $this->config = $config;
+
+        } else {
+            throw new ConfigurationException("PHP file $file does not provide \$config.");
+        }
     }
 
     public function get($key, $default = null) {

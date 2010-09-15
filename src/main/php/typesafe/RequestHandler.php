@@ -14,19 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('pinjector/Module.php');
-require_once('TestServlet.php');
+
+
 
 /**
  * 
  * @author Tobias Sarnowski
- */
-class TestModule implements Module {
+ */ 
+interface RequestHandler {
 
-    public function configure(Binder $binder) {
-
-        $binder->bind('TestServlet')->inRequestScope();
-
-    }
+    /**
+     * The binding to use.
+     *
+     * @abstract
+     * @param  string $className
+     * @param  string $annotation
+     * @return void
+     */
+    public function with($className, $annotation = null);
 
 }

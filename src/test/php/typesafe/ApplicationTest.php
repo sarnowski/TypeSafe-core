@@ -26,7 +26,12 @@ class ApplicationTest extends PHPUnit_Framework_TestCase {
 
     public function testDummy() {
         $framework = BootLoader::boot(new TestModule());
-        $framework->handleRequest('/test/1234/9.html');
+
+        // matches:  /test/<1>/<2>.html
+        $framework->handle('#^/test/(.+)/(.+)\.html$#')->with('TestServlet');
+
+        // do your work
+        $framework->request('/test/1234/9.html');
     }
 
 }

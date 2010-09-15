@@ -18,6 +18,7 @@
 require_once('pinjector/DefaultKernel.php');
 require_once('pinjector/Kernel.php');
 require_once('pinjector/Module.php');
+require_once('DefaultRequestHandler.php');
 require_once('Framework.php');
 
 /**
@@ -34,19 +35,21 @@ class DefaultFramework implements Framework {
     /**
      * @var array
      */
-    private $matcher;
+    private $matches;
 
     function __construct(Module $module) {
         $this->kernel = DefaultKernel::boot($module);
-        $this->registerMatcher($module);
     }
 
-    public function handleRequest($requestUri) {
+    public function request($requestUri) {
         // search for the handler
-        foreach ($this->matcher as $match) {
-            if (preg_match($match['requestMatching'], $requestUri, $matches)) {
+        foreach ($this->matches as $match) {
+            if (preg_match($match->getRegexMatcher(), $requestUri, $matches)) {
                 // get the handler instance
-                $handler = $this->kernel->getInstance($match['className'], $match['annotation']);
+                $handler = $this->kernel->getInstance(
+                    $match->getClassName(),
+                    $match->getAnnotation()
+                );
 
                 // call it!
                 $handler->handleRequest($matches);
@@ -62,11 +65,9 @@ class DefaultFramework implements Framework {
         $this->kernel->install($module);
     }
 
-    public function registerMatcher(Module $module) {
-        if ($module instanceof ServletModule) {
-            foreach ($module->getMatcher() as $match) {
-                $this->matcher[] = $match;
-            }
-        }
+    public function handle($requestMatching) {
+        $handler = new DefaultRequestHandler($requestMatching);
+        $this->matches[] = $handler;
+        return $handler;
     }
 }

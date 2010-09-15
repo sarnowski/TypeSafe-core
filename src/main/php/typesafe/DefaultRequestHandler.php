@@ -15,29 +15,38 @@
  * limitations under the License.
  */
 
-require_once('pinjector/Module.php');
-require_once('PropertyConfiguration.php');
+require_once('RequestHandler.php');
+
 
 /**
  * 
  * @author Tobias Sarnowski
- */
-class PropertyConfigurationModule implements Module {
+ */ 
+class DefaultRequestHandler implements RequestHandler {
 
-    /**
-     * @var PropertyConfiguration
-     */
-    private $config;
+    private $regexMatcher;
+    private $className;
+    private $annotation;
 
-    public function __construct($file) {
-        $this->config = new PropertyConfiguration($file);
+    function __construct($regexMatcher) {
+        $this->regexMatcher = $regexMatcher;
     }
 
-    public function addFile($file) {
-        $this->config->addFile($file);
+    public function with($className, $annotation = null) {
+        $this->className = $className;
+        $this->annotation = $annotation;
     }
 
-    public function configure(Binder $binder) {
-        $binder->bind('Configuration')->toInstance($this->config);
+    public function getAnnotation() {
+        return $this->annotation;
     }
+
+    public function getClassName() {
+        return $this->className;
+    }
+
+    public function getRegexMatcher() {
+        return $this->regexMatcher;
+    }
+
 }

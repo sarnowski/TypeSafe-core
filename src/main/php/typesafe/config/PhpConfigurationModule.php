@@ -16,37 +16,28 @@
  */
 
 require_once('pinjector/Module.php');
+require_once('PhpConfiguration.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-abstract class ServletModule implements Module {
-
-    private $matcher = array();
+class PropertyConfigurationModule implements Module {
 
     /**
-     * Registers a matching regex to dispatch a request
-     * to the given binding.
-     *
-     * @param  string $requestMatching
-     * @param  string $className
-     * @param  string $annotation
-     * @return void
+     * @var PropertyConfiguration
      */
-    public function handle($requestMatching, $className, $annotation = null) {
-        $this->matcher[] = array(
-            'requestMatching' => $requestMatching,
-            'className' => $className,
-            'annotation' => $annotation
-        );
+    private $config;
+
+    public function __construct($file) {
+        $this->config = new PropertyConfiguration($file);
     }
 
-    /**
-     * @return array
-     */
-    public function getMatcher() {
-        return $this->matcher;
+    public function addFile($file) {
+        $this->config->addFile($file);
     }
 
+    public function configure(Binder $binder) {
+        $binder->bind('Configuration')->toInstance($this->config);
+    }
 }

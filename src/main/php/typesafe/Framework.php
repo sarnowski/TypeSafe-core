@@ -16,6 +16,7 @@
  */
 
 require_once('pinjector/Module.php');
+require_once('RequestHandler.php');
 
 /**
  * 
@@ -33,6 +34,15 @@ interface Framework {
     public function install(Module $module);
 
     /**
+     * Registers a request handler.
+     *
+     * @abstract
+     * @param  string $requestMatching
+     * @return RequestHandler
+     */
+    public function handle($requestMatching);
+
+    /**
      * Handles a request.
      *
      * @abstract
@@ -40,6 +50,6 @@ interface Framework {
      * @param  string $requestUri
      * @return void
      */
-    public function handleRequest($requestUri);
+    public function request($requestUri);
 
 }
