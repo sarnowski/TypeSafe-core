@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+require_once('typesafe/session/Session.php');
 require_once('Subject.php');
 require_once('SecurityManager.php');
 
@@ -36,6 +36,11 @@ class DefaultSubject implements Subject {
     private $securityManager;
 
     /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * @var array
      */
     private $roles = null;
@@ -45,8 +50,9 @@ class DefaultSubject implements Subject {
      */
     private $permissions = null;
 
-    function __construct(SecurityManager $securityManager) {
+    function __construct(SecurityManager $securityManager, Session $session) {
         $this->securityManager = $securityManager;
+        $this->session = $session;
     }
 
     function loadRoles() {
@@ -74,7 +80,7 @@ class DefaultSubject implements Subject {
     }
 
     public function getPrincipal() {
-        return $_SESSION[self::PRINCIPAL_KEY];
+        return $this->session->get(self::PRINCIPAL_KEY);
     }
 
     public function hasPermission($permission) {
@@ -92,13 +98,15 @@ class DefaultSubject implements Subject {
     }
 
     public function login($credentials) {
-        $_SESSION[self::PRINCIPAL_KEY] = $this->securityManager->login($this, $credentials);
+        $principal = $this->securityManager->login($this, $credentials);
+        $this->session->set(self::PRINCIPAL_KEY, $principal);
         $this->roles = null;
         $this->permissions = null;
     }
 
     public function logout($principal = null) {
-        $_SESSION[self::PRINCIPAL_KEY] = $this->securityManager->logout($this, $principal);
+        $principal = $this->securityManager->logout($this, $principal);
+        $this->session->set(self::PRINCIPAL_KEY, $principal);
         $this->roles = null;
         $this->permissions = null;
     }
