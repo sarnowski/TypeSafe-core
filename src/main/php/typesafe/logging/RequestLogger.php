@@ -21,25 +21,12 @@ require_once('Logger.php');
  * 
  * @author Tobias Sarnowski
  */
-class SessionLogger implements Logger {
+class RequestLogger implements Logger {
 
     /**
      * @var array
      */
     private $logs = array();
-
-    /**
-     * @var int
-     */
-    private $maxLog;
-
-    /**
-     * @param Configuration $config
-     * @return void
-     */
-    public function __construct($config) {
-        $this->maxLog = $config->get('sessionLog.maxLogs', 300);
-    }
 
     /**
      * @private
@@ -58,10 +45,6 @@ class SessionLogger implements Logger {
             $log['exception'] = $exception;
         }
         $this->logs[] = $log;
-
-        if (count($this->logs) > $this->maxLog) {
-            array_shift($this->logs);
-        }
     }
 
     /**
