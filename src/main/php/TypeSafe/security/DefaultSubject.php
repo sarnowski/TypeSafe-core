@@ -50,6 +50,11 @@ class DefaultSubject implements Subject {
      */
     private $permissions = null;
 
+    /**
+     * @param SecurityManager $securityManager
+     * @param Session $session
+     * @return void
+     */
     function __construct(SecurityManager $securityManager, Session $session) {
         $this->securityManager = $securityManager;
         $this->session = $session;

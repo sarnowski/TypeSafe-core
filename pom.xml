@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.github.sarnowski</groupId>
             <artifactId>pinjector</artifactId>
-            <version>[0.3,2)</version>
+            <version>[0.4-SNAPSHOT,2)</version>
         </dependency>
     </dependencies>
 

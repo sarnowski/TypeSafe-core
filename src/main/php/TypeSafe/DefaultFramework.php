@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+require_once('pinjector/ConfigurationException.php');
 require_once('pinjector/DefaultKernel.php');
 require_once('pinjector/Kernel.php');
 require_once('pinjector/Module.php');
+require_once('DefaultRequestCallback.php');
 require_once('DefaultRequestHandler.php');
 require_once('Framework.php');
 
@@ -32,42 +33,25 @@ class DefaultFramework implements Framework {
      */
     private $kernel;
 
-    /**
-     * @var array
-     */
-    private $matches;
-
     function __construct(Module $module) {
         $this->kernel = DefaultKernel::boot($module);
-    }
-
-    public function request($requestUri) {
-        // search for the handler
-        foreach ($this->matches as $match) {
-            if (preg_match($match->getRegexMatcher(), $requestUri, $matches)) {
-                // get the handler instance
-                $handler = $this->kernel->getInstance(
-                    $match->getClassName(),
-                    $match->getAnnotation()
-                );
-
-                // call it!
-                $handler->handleRequest($matches);
-                return;
-            }
-        }
-
-        // nothing matched? bad
-        throw new ConfigurationException("no request handler matched");
     }
 
     public function install(Module $module) {
         $this->kernel->install($module);
     }
 
-    public function handle($requestMatching) {
-        $handler = new DefaultRequestHandler($requestMatching);
-        $this->matches[] = $handler;
-        return $handler;
+    public function request($requestUri) {
+        // try the handlers
+        $registry = $this->kernel->getInstance('Registry');
+        $notfound = $registry->call('RequestHandler',
+            new DefaultRequestCallback($requestUri, $this->kernel)
+        );
+
+        // nothing matched? bad
+        if ($notfound) {
+            throw new ConfigurationException("no request handler matched");
+        }
     }
+
 }

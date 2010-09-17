@@ -14,21 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('pinjector/Module.php');
-require_once('TypeSafe/ServletModule.php');
-require_once('TestServlet.php');
+
+require_once('pinjector/AbstractModule.php');
+require_once('DefaultRequestHandler.php');
+
 
 /**
- * 
+ *
  * @author Tobias Sarnowski
- */
-class TestModule extends ServletModule {
+ */ 
+abstract class ServletModule extends AbstractModule {
 
-    public function configuration() {
-        $this->bind('TestServlet')->inRequestScope();
-
-        // matches:  /test/<1>/<2>.html
-        $this->handle('#^/test/(.+)/(.+)\.html$#')->with('TestServlet');
+    /**
+     * Registers a request handler.
+     *
+     * @abstract
+     * @param  string $requestMatching
+     * @return RequestHandler
+     */
+    public function handle($requestMatching) {
+        $handler = new DefaultRequestHandler($requestMatching);
+        $this->register('RequestHandler')->toInstance($handler);
+        return $handler;
     }
 
 }

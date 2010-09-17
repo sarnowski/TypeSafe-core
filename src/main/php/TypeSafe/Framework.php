@@ -14,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 require_once('pinjector/Module.php');
-require_once('RequestHandler.php');
 
 /**
  * 
@@ -32,15 +30,6 @@ interface Framework {
      * @return void
      */
     public function install(Module $module);
-
-    /**
-     * Registers a request handler.
-     *
-     * @abstract
-     * @param  string $requestMatching
-     * @return RequestHandler
-     */
-    public function handle($requestMatching);
 
     /**
      * Handles a request.

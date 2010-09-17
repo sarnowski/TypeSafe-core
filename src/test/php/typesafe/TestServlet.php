@@ -25,5 +25,6 @@ class TestServlet implements Servlet {
 
     public function handleRequest($matches) {
         // can handle a request
+        print_r($matches);
     }
 }

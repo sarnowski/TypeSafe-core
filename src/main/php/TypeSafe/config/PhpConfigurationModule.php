@@ -25,16 +25,12 @@ require_once('PhpConfiguration.php');
 class PropertyConfigurationModule implements Module {
 
     /**
-     * @var PropertyConfiguration
+     * @var PhpConfiguration
      */
     private $config;
 
     public function __construct($file) {
-        $this->config = new PropertyConfiguration($file);
-    }
-
-    public function addFile($file) {
-        $this->config->addFile($file);
+        $this->config = new PhpConfiguration($file);
     }
 
     public function configure(Binder $binder) {

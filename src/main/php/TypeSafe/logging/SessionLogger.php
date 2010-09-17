@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+require_once('TypeSafe/config/Configuration.php');
 require_once('Logger.php');
+
 
 /**
  * 
@@ -37,7 +38,7 @@ class SessionLogger implements Logger {
      * @param Configuration $config
      * @return void
      */
-    public function __construct($config) {
+    public function __construct(Configuration $config) {
         $this->maxLog = $config->get('sessionLog.maxLogs', 300);
     }
 
