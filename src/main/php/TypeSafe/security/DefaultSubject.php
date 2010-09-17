@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require_once('typesafe/session/Session.php');
+require_once('TypeSafe/session/Session.php');
 require_once('Subject.php');
 require_once('SecurityManager.php');
 
