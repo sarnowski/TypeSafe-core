@@ -14,17 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+require_once('pinjector/DocParser.php');
 require_once('pinjector/Pointcut.php');
 
 
 /**
- * 
+ *
  * @author Tobias Sarnowski
- */ 
-class IsAuthenticatedPointcut implements Pointcut {
+ */
+class RequiresPermissionsPointcut implements Pointcut {
 
     public function matchesMethod(ReflectionMethod &$method) {
-        // TODO: Implement matchesMethod() method.
+        $value = DocParser::parseSetting($method->getDocComment(), 'requiresPermissions');
+        if (is_null($value)) {
+            return false;
+        } else {
+            if (trim($value) == '') {
+                throw new SecurityConfigurationException(
+                    "@requiresPermissions without permission hints found in method ".
+                            $method->getDeclaringClass()->getName().
+                            "->".
+                            $method->getName()
+                );
+            } else {
+                return true;
+            }
+        }
     }
 }

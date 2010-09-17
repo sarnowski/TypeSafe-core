@@ -17,8 +17,12 @@
 
 require_once('pinjector/Module.php');
 require_once('DefaultSubject.php');
-require_once('IsAuthenticatedInterceptor.php');
-require_once('IsAuthenticatedPointcut.php');
+require_once('RequiresAuthenticationInterceptor.php');
+require_once('RequiresAuthenticationPointcut.php');
+require_once('RequiresRolesInterceptor.php');
+require_once('RequiresRolesPointcut.php');
+require_once('RequiresPermissionsInterceptor.php');
+require_once('RequiresPermissionsPointcut.php');
 require_once('Subject.php');
 
 
@@ -31,6 +35,13 @@ class SecurityModule implements Module {
     public function configure(Binder $binder) {
         $binder->bind('Subject')->to('DefaultSubject')->inRequestScope();
 
-        $binder->interceptWith('IsAuthenticatedInterceptor')->on(new IsAuthenticatedPointcut());
+        $binder->bind('RequiresAuthenticationInterceptor')->inRequestScope();
+        $binder->interceptWith('RequiresAuthenticationInterceptor')->on(new RequiresAuthenticationPointcut());
+
+        $binder->bind('RequiresRolesInterceptor')->inRequestScope();
+        $binder->interceptWith('RequiresRolesInterceptor')->on(new RequiresRolesPointcut());
+
+        $binder->bind('RequiresPermissionsInterceptor')->inRequestScope();
+        $binder->interceptWith('RequiresPermissionsInterceptor')->on(new RequiresPermissionsPointcut());
     }
 }

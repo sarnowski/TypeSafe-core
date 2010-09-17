@@ -93,9 +93,13 @@ class DefaultSubject implements Subject {
 
     public function login($credentials) {
         $_SESSION[self::PRINCIPAL_KEY] = $this->securityManager->login($this, $credentials);
+        $this->roles = null;
+        $this->permissions = null;
     }
 
     public function logout($principal = null) {
         $_SESSION[self::PRINCIPAL_KEY] = $this->securityManager->logout($this, $principal);
+        $this->roles = null;
+        $this->permissions = null;
     }
 }

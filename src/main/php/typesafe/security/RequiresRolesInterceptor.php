@@ -14,17 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+require_once('pinjector/DocParser.php');
 require_once('pinjector/Interceptor.php');
+require_once('NotAuthorizedException.php');
+require_once('Subject.php');
 
 
 /**
- * 
+ *
  * @author Tobias Sarnowski
- */ 
-class IsAuthenticatedInterceptor implements Interceptor {
+ */
+class RequiresRolesInterceptor implements Interceptor {
+
+    /**
+     * @var Subject
+     */
+    private $subject;
+
+    /**
+     * @param Subject $subject
+     * @return void
+     */
+    function __construct(Subject $subject) {
+        $this->subject = $subject;
+    }
 
     public function intercept(InterceptionChain $chain) {
-        // TODO: Implement intercept() method.
+        $roles = DocParser::parseSetting($chain->getMethod()->getDocComment(), 'requiresRoles');
+        foreach (explode(',', $roles) as $role) {
+            if (!$this->subject->hasRole(trim($role))) {
+                throw new NotAuthorizedException("Subject has not required role $role");
+            }
+        }
+        return $chain->proceed();
     }
 }
