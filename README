@@ -11,9 +11,10 @@ For reference: http://github.com/sarnowski/pinjector
 Bootstrapping
 ================================================================================
 
-require_once('typesafe/BootLoader.php');
+require_once('TypeSafe/BootLoader.php');
 
 // Look at the pinjector documentation to discover what a module is.
+// And have a look at the ServletModule
 $framework = BootLoader::boot(new ApplicationModule());
-$framework->handleRequest($_SERVER['REQUEST_URI']);
+$framework->request($_SERVER['REQUEST_URI']);
 
