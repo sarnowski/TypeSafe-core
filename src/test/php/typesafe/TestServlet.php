@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-require_once('typesafe/Servlet.php');
+require_once('TypeSafe/Servlet.php');
 
 /**
  * 

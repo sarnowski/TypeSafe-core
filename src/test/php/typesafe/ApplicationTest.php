@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 require_once('PHPUnit/Framework.php');
-require_once('typesafe/BootLoader.php');
+require_once('TypeSafe/BootLoader.php');
 require_once('TestModule.php');
 
 /**
