@@ -22,7 +22,7 @@ require_once('PhpConfiguration.php');
  * 
  * @author Tobias Sarnowski
  */
-class PropertyConfigurationModule implements Module {
+class PhpConfigurationModule implements Module {
 
     /**
      * @var PhpConfiguration
