@@ -18,6 +18,7 @@ require_once('pinjector/ConfigurationException.php');
 require_once('pinjector/DefaultKernel.php');
 require_once('pinjector/Kernel.php');
 require_once('pinjector/Module.php');
+require_once('http/NotFoundException.php');
 require_once('DefaultRequestCallback.php');
 require_once('DefaultRequestHandler.php');
 require_once('Framework.php');
@@ -50,7 +51,7 @@ class DefaultFramework implements Framework {
 
         // nothing matched? bad
         if ($notfound) {
-            throw new ConfigurationException("no request handler matched");
+            throw new NotFoundException("no request handler matched");
         }
     }
 
