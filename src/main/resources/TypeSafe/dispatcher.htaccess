@@ -1,0 +1,6 @@
+RewriteEngine on
+
+# use the TypeSafe dispatcher to handle all requests except file requests
+RewriteRule ^$                        TypeSafe/dispatcher.php?uri=  [QSA,L]
+RewriteCond %{REQUEST_FILENAME}       !-f
+RewriteRule ^(.*)$                    TypeSafe/dispatcher.php?uri=$1  [QSA,L]
