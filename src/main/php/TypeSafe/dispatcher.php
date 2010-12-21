@@ -15,11 +15,33 @@
  * limitations under the License.
  */
 
+// possible include paths to add and check
+$includePaths = array(
+    realpath(dirname(__FILE__).'/../'),  // general path
+    realpath(dirname(__FILE__).'/../../../src/main/php/')  // for development with maven
+);
+
 // set include path to root directory
 $includePath = get_include_path();
-$includePath .= PATH_SEPARATOR.dirname(__FILE__).'/../';
+foreach ($includePaths as $path) {
+    $includePath .= PATH_SEPARATOR.$path;
+}
 if (!set_include_path($includePath)) {
     die('Cannot set include path!');
+}
+
+// helper for file_exists
+function include_file_exists($filename) {
+    global $includePaths;
+    if (file_exists($filename)) {
+        return true;
+    }
+    foreach ($includePaths as $path) {
+        if (file_exists("$path/$filename")) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // basic requirements
@@ -61,8 +83,8 @@ function print_exception(Exception $e) {
 try {
 
     // load configuration file
-    $configFile = dirname(__FILE__).'/../config.typesafe.php';
-    if (!file_exists($configFile)) {
+    $configFile = 'config.typesafe.php';
+    if (!include_file_exists($configFile)) {
         throw new InternalServerErrorException('Configuration file not found ['.$configFile.']');
     }
     require($configFile);
