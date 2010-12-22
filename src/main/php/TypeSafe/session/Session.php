@@ -45,6 +45,15 @@ interface Session {
     public function set($key, $value);
 
     /**
+     * Removes the given key from the session.
+     *
+     * @abstract
+     * @param string $key
+     * @return void
+     */
+    public function remove($key);
+
+    /**
      * Checks if a value is set in the session.
      *
      * @abstract

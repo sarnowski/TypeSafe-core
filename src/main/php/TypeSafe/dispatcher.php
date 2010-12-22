@@ -18,7 +18,8 @@
 // possible include paths to add and check
 $includePaths = array(
     realpath(dirname(__FILE__).'/../'),  // general path
-    realpath(dirname(__FILE__).'/../../../src/main/php/')  // for development with maven
+    realpath(dirname(__FILE__).'/../../../src/main/php/'),  // for development with maven
+    realpath(dirname(__FILE__).'/../../../src/main/resources/'),  // for development with maven
 );
 
 // set include path to root directory
