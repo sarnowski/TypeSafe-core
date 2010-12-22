@@ -69,10 +69,10 @@ function print_exception(Exception $e) {
     ob_end_clean();
 
     if ($e instanceof HttpException) {
-        header('HTTP/1.0 '.$e->getStatusCode().' '.$e->getTitle());
+        if (!headers_sent()) header('HTTP/1.0 '.$e->getStatusCode().' '.$e->getTitle());
         echo '<h1>'.$e->getTitle().'</h1>';
     } else {
-        header('HTTP/1.0 500 Internal Server Error');
+        if (!headers_sent()) header('HTTP/1.0 500 Internal Server Error');
         echo '<h1>Internal Server Error</h1>';
     }
     if ($debug) {
