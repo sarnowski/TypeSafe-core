@@ -59,15 +59,17 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
 
 set_error_handler('exceptions_error_handler');
 
+// buffer output
+ob_start();
 
 // helper to print nice errors
 function print_exception(Exception $e) {
     $debug = ini_get('display_errors');
 
+    ob_end_clean();
+
     if ($e instanceof HttpException) {
-        if (!$debug) {
-            header('HTTP/1.0 '.$e->getStatusCode().' '.$e->getTitle());
-        }
+        header('HTTP/1.0 '.$e->getStatusCode().' '.$e->getTitle());
         echo '<h1>'.$e->getTitle().'</h1>';
     } else {
         header('HTTP/1.0 500 Internal Server Error');
@@ -107,6 +109,9 @@ try {
 
     // execute
     $framework->request($_GET['uri']);
+
+    // print output buffer
+    ob_end_flush();
 
 } catch (Exception $e) {
     print_exception($e);
