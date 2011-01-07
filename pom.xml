@@ -8,7 +8,7 @@
     </parent>
 
     <groupId>com.github.sarnowski</groupId>
-    <artifactId>TypeSafe</artifactId>
+    <artifactId>TypeSafe-core</artifactId>
     <version>0.6-SNAPSHOT</version>
 
     <name>TypeSafe</name>
