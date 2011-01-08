@@ -26,7 +26,7 @@ require_once('TestServlet.php');
 class TestModule extends ServletModule {
 
     public function configuration() {
-        $this->bind('TestServlet')->inRequestScope();
+        $this->bind('TestServlet');
 
         // matches:  /test/<1>/<2>.html
         $this->handle('#^/test/(.+)/(.+)\.html$#')->with('TestServlet');

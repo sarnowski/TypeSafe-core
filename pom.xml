@@ -11,7 +11,7 @@
     <artifactId>TypeSafe-core</artifactId>
     <version>0.7-SNAPSHOT</version>
 
-    <name>TypeSafe</name>
+    <name>TypeSafe-core</name>
 
     <packaging>jar</packaging>
 
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.github.sarnowski</groupId>
             <artifactId>pinjector</artifactId>
-            <version>[0.6,2)</version>
+            <version>[0.6.1,2)</version>
         </dependency>
     </dependencies>
 
