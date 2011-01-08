@@ -22,7 +22,7 @@ require_once('Configuration.php');
  * 
  * @author Tobias Sarnowski
  */
-class PhpConfiguration implements Configuration {
+class ArrayConfiguration implements Configuration {
 
     /**
      * @var array
