@@ -25,6 +25,6 @@ require_once('RequestLogger.php');
 class RequestLoggerModule implements Module {
 
     public function configure(Binder $binder) {
-        $binder->bind('Logger')->to('RequestLogger')->inRequestScope();
+        $binder->bind('Logger')->to('RequestLogger');
     }
 }

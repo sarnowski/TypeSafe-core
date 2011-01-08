@@ -27,6 +27,6 @@ require_once('PhpSession.php');
 class PhpSessionModule implements Module {
 
     public function configure(Binder $binder) {
-        $binder->bind('Session')->to('PhpSession')->inRequestScope();
+        $binder->bind('Session')->to('PhpSession');
     }
 }
