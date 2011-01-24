@@ -42,7 +42,13 @@ class FileLogger extends AbstractLogger {
      * @return void
      */
     function log($priority, $message, $exception = null) {
-        $log = date('Y/m/d H:i:s')."  $priority  $message\n";
+        if ($this->getMin() < 2) {
+            $stack = debug_backtrace(false);
+            $location = basename($stack[2]['file']).':'.$stack[2]['line'];
+            $log = date('Y/m/d H:i:s')."  $priority  $location  $message\n";
+        } else {
+            $log = date('Y/m/d H:i:s')."  $priority  $message\n";
+        }
         if (!is_null($exception)) {
             $log .= $exception->__toString()."\n";
         }

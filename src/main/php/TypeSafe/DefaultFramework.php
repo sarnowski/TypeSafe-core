@@ -46,9 +46,15 @@ class DefaultFramework implements Framework {
     public function request($requestUri) {
         // try the handlers
         $registry = $this->kernel->getInstance('Registry');
-        $notfound = $registry->call('RequestHandler',
-            new DefaultRequestCallback($requestUri, $this->kernel)
-        );
+        try {
+            $notfound = $registry->call('RequestHandler',
+                new DefaultRequestCallback($requestUri, $this->kernel)
+            );
+        } catch (Exception $e) {
+            $logger = $this->kernel->getInstance('Logger');
+            $logger->error("Uncatched exception during request $requestUri", $e);
+            throw $e;
+        }
 
         // nothing matched? bad
         if ($notfound) {
