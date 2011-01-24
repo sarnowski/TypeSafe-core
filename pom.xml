@@ -9,7 +9,7 @@
 
     <groupId>com.github.sarnowski</groupId>
     <artifactId>TypeSafe-core</artifactId>
-    <version>0.8-SNAPSHOT</version>
+    <version>0.8.0</version>
 
     <name>TypeSafe-core</name>
 
