@@ -46,7 +46,7 @@ abstract class AbstractLogger implements Logger {
      * @param null $exception
      * @return void
      */
-    private function _log($priority, $message, $exception = null) {
+    function _log($priority, $message, $exception = null) {
         if ($priority < $this->min) {
             // filtered
             return;

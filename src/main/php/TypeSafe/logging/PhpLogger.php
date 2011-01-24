@@ -30,9 +30,9 @@ class PhpLogger extends AbstractLogger {
      * @return void
      */
     function log($priority, $message, $exception = null) {
-        $log = "$priority $message";
+        $log = "$priority  $message\n";
         if (!is_null($exception)) {
-            $log .= "\n".$exception->__toString();
+            $log .= $exception->__toString()."\n";
         }
         error_log($log);
     }

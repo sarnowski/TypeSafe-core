@@ -42,9 +42,9 @@ class FileLogger extends AbstractLogger {
      * @return void
      */
     function log($priority, $message, $exception = null) {
-        $log = "$priority $message";
+        $log = date('Y/m/d H:i:s')."  $priority  $message\n";
         if (!is_null($exception)) {
-            $log .= "\n".$exception->__toString();
+            $log .= $exception->__toString()."\n";
         }
         error_log($log, 3, $this->file);
     }
