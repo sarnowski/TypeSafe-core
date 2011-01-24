@@ -14,14 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-require_once('Logger.php');
+require_once('AbstractLogger.php');
+require_once('TypeSafe/config/Configuration.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class FileLogger implements Logger {
+class FileLogger extends AbstractLogger {
+    /**
+     * @var string
+     */
+    private $file;
+
+    /**
+     * @param Configuration $configuration
+     */
+    function __construct(Configuration $configuration) {
+        $this->file = $configuration->get('logging.file', '/tmp/typesafe.log');
+    }
 
     /**
      * @private
@@ -30,31 +41,11 @@ class FileLogger implements Logger {
      * @param Exception $exception
      * @return void
      */
-    function log($priority, $message, $exception) {
+    function log($priority, $message, $exception = null) {
         $log = "$priority $message";
         if (!is_null($exception)) {
             $log .= "\n".$exception->__toString();
         }
-        error_log($log, 3, '/tmp/php.log');
-    }
-
-    public function debug($message, $exception = null) {
-        $this->log('DEBUG', $message, $exception);
-    }
-
-    public function error($message, $exception = null) {
-        $this->log('ERROR', $message, $exception);
-    }
-
-    public function info($message, $exception = null) {
-        $this->log('INFO', $message, $exception);
-    }
-
-    public function trace($message, $exception = null) {
-        $this->log('TRACE', $message, $exception);
-    }
-
-    public function warn($message, $exception = null) {
-        $this->log('WARN', $message, $exception);
+        error_log($log, 3, $this->file);
     }
 }

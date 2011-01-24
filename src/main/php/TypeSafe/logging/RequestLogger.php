@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-require_once('Logger.php');
+require_once('AbstractLogger.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class RequestLogger implements Logger {
+class RequestLogger extends AbstractLogger {
 
     /**
      * @var array
@@ -35,7 +34,7 @@ class RequestLogger implements Logger {
      * @param  $exception
      * @return void
      */
-    function log($priority, $message, $exception) {
+    function log($priority, $message, $exception = null) {
         $log = array(
             'time' => microtime(true),
             'priority' => $priority,
@@ -54,25 +53,5 @@ class RequestLogger implements Logger {
      */
     public function getLogs() {
         return $this->logs;
-    }
-
-    public function debug($message, $exception = null) {
-        $this->log('DEBUG', $message, $exception);
-    }
-
-    public function error($message, $exception = null) {
-        $this->log('ERROR', $message, $exception);
-    }
-
-    public function info($message, $exception = null) {
-        $this->log('INFO', $message, $exception);
-    }
-
-    public function trace($message, $exception = null) {
-        $this->log('TRACE', $message, $exception);
-    }
-
-    public function warn($message, $exception = null) {
-        $this->log('WARN', $message, $exception);
     }
 }

@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-require_once('Logger.php');
+require_once('AbstractLogger.php');
 
 /**
  * 
  * @author Tobias Sarnowski
  */
-class PhpLogger implements Logger {
+class PhpLogger extends AbstractLogger {
 
     /**
      * @private
@@ -30,31 +29,11 @@ class PhpLogger implements Logger {
      * @param Exception $exception
      * @return void
      */
-    function log($priority, $message, $exception) {
+    function log($priority, $message, $exception = null) {
         $log = "$priority $message";
         if (!is_null($exception)) {
             $log .= "\n".$exception->__toString();
         }
         error_log($log);
-    }
-
-    public function debug($message, $exception = null) {
-        $this->log('DEBUG', $message, $exception);
-    }
-
-    public function error($message, $exception = null) {
-        $this->log('ERROR', $message, $exception);
-    }
-
-    public function info($message, $exception = null) {
-        $this->log('INFO', $message, $exception);
-    }
-
-    public function trace($message, $exception = null) {
-        $this->log('TRACE', $message, $exception);
-    }
-
-    public function warn($message, $exception = null) {
-        $this->log('WARN', $message, $exception);
     }
 }
